@@ -5,7 +5,7 @@ import { promisify } from 'util'
 import { nanoid } from 'nanoid'
 import fs from 'fs-extra'
 
-import { createGit } from '../../lib/git.js'
+import { create_git } from '../../lib/git.js'
 
 let spawn = promisify(execFile)
 let currentDir = dirname(fileURLToPath(import.meta.url))
@@ -22,7 +22,7 @@ async function appendFile(filename, content, dir = cwd) {
 }
 
 async function execGit(args) {
-  let git = createGit(cwd)
+  let git = create_git(cwd)
   await git.exec(args, { cwd })
 }
 
@@ -33,7 +33,7 @@ async function initGitRepo() {
   await appendFile('README.md', '# Test\n')
   await appendFile('.gitignore', `node_modules/\n`)
   await execGit(['add', 'README.md'])
-  await execGit(['commit', '-m initial commit'])
+  await execGit(['commit', '-m', '"initial commit"'])
 }
 
 async function initProject() {
@@ -51,8 +51,8 @@ async function initProject() {
     }`
   )
 
-  await spawn('yarn', ['add', 'lint-staged'], { cwd })
-  await spawn('yarn', ['add', resolve(cwd, '../../../../nano-staged')], {
+  await spawn('pnpm', ['add', 'lint-staged'], { cwd })
+  await spawn('pnpm', ['add', resolve(cwd, '../../../../nano-staged')], {
     cwd,
   })
   await appendFile('a.js', 'var test = {};')
