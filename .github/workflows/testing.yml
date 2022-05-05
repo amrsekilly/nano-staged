@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 12
+          - 16
         os:
           - ubuntu-latest
           - macos-latest
